@@ -9,16 +9,11 @@ public class Battle {
         Hero myHero = new Hero("Iliya");
         Goblin goblin = new Goblin("Gob");
         System.out.println(myHero);
+        System.out.println(goblin);
         printBattle(myHero, goblin);
     }
 
     public static void printBattle(Hero hero, Goblin goblin) throws InterruptedException {
-//         String xxe = "\u2694";
-//         String xxc = "\ud83d\udde1";
-//         String xxf = "\uD83D\uDEE1️ Hero \uD83D\uDEE1️";
-//         String xxg = "☠ Goblin☠ ";
-//         String xxh = "\uD83D\uDC79Monster\uD83D\uDC79";
-
         final String butStart = "            ꧁༺ \u2694 Start of Battle \u2694 ༻꧂        ";
         final String butEnd = "           ▀▄▀▄▀▄ \uD83D\uDC98 End of Buttle \uD83D\uDC98 ▄▀▄▀▄▀        ";
         final String heroBegin = "\uD83D\uDEE1️Hero:";
@@ -28,25 +23,40 @@ public class Battle {
         String knifeHero = "\ud83d\udde1";
         String knifeMonster = "\ud83d\udde1";
 
-        int n = 10000;
+        int lifeHero = hero.getHealthPoints();
+        int lifeGoblin = goblin.getHealthPoints();
         int time = 0;
         char c;
+        boolean heroAttemp = false;
         String charEnd = "\u2694";;
 
+        System.out.println(hero.attack());
+        System.out.println(goblin.attack());
         System.out.println("\n" + butStart + "\n");
-        while (n > 0) {
+        while (lifeHero > 0 && lifeGoblin > 0) {
+
             Thread.sleep(300);
             c = getSymHeroAtt(time++);
+
+            if(heroAttemp){
+                lifeGoblin -= hero.attack();
+                if(lifeGoblin < 0) lifeGoblin = 0;
+            }
+            else{
+                lifeHero -= goblin.attack();
+                if(lifeHero < 0) lifeHero = 0;
+            }
+
             System.out.printf("%s%s%s %5.2f%c %s  %c  %s %5.2f%c %s%s%s\r",
-                    heroBegin, hero.getName(), heroEnd, n / 100.0,'%', knifeHero,  c,
-                    knifeMonster, n / 100.0,'%', monstBegin, goblin.getName(), monstEnd);
-            n-= 200;
+                    heroBegin, hero.getName(), heroEnd, lifeHero / 100.0,'%', knifeHero,  c,
+                    knifeMonster, lifeGoblin / 100.0,'%', monstBegin, goblin.getName(), monstEnd);
+            heroAttemp = !heroAttemp;
         }
         knifeHero = "\u2764";
         knifeMonster = "☠";
         System.out.printf("%s%s%s %5.2f%c %s  %s  %s %5.2f%c %s%s%s\n",
-                heroBegin, hero.getName(), heroEnd, n / 100.0,'%', knifeHero,  charEnd,
-                knifeMonster, n / 100.0,'%', monstBegin, goblin.getName(), monstEnd);
+                heroBegin, hero.getName(), heroEnd, lifeHero / 100.0,'%', knifeHero,  charEnd,
+                knifeMonster, lifeGoblin / 100.0,'%', monstBegin, goblin.getName(), monstEnd);
         System.out.println("\n" + butEnd);
     }
 

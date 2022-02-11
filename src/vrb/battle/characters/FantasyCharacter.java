@@ -1,6 +1,6 @@
 package vrb.battle.characters;
 
-public class FantasyCharacter {
+public abstract class FantasyCharacter implements Fighter{
     private String name;
     private int healthPoints;
     private int strength;
@@ -67,5 +67,10 @@ public class FantasyCharacter {
 
     public void setGold(int gold) {
         this.gold = gold;
+    }
+
+    @Override
+    public int attack() {
+        return 0;
     }
 }
