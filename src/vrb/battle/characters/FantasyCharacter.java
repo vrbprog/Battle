@@ -69,6 +69,10 @@ public abstract class FantasyCharacter implements Fighter{
         this.gold = gold;
     }
 
+    public void addGold(int gold) {
+        this.gold += gold;
+    }
+
     @Override
     public int attack() {
         return 0;

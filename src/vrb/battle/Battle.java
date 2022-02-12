@@ -8,8 +8,6 @@ public class Battle {
         System.out.println("Battle is starting...");
         Hero myHero = new Hero("Iliya");
         Goblin goblin = new Goblin("Gob");
-        System.out.println(myHero);
-        System.out.println(goblin);
         printBattle(myHero, goblin);
     }
 
@@ -17,47 +15,96 @@ public class Battle {
         final String butStart = "            ꧁༺ \u2694 Start of Battle \u2694 ༻꧂        ";
         final String butEnd = "           ▀▄▀▄▀▄ \uD83D\uDC98 End of Buttle \uD83D\uDC98 ▄▀▄▀▄▀        ";
         final String heroBegin = "\uD83D\uDEE1️Hero:";
+        final String heroBegin2 = "\uD83D\uDC51️Hero:";
         final String heroEnd = "\uD83D\uDEE1️";
+        final String heroEnd2 = "\uD83D\uDC51️";
         final String monstBegin = "\uD83D\uDC79Monster:";
         final String monstEnd = "\uD83D\uDC79";
-        String knifeHero = "\ud83d\udde1";
-        String knifeMonster = "\ud83d\udde1";
+        final String KNIFE = "\ud83d\udde1";
+        final String charEnd = "\u2694";
+        String knifeHero = " ";
+        String knifeMonster = " ";
 
         int lifeHero = hero.getHealthPoints();
         int lifeGoblin = goblin.getHealthPoints();
+        int deltaHeroAttack = 0;
+        int deltaMonstrAttack = 0;
         int time = 0;
+        int numDelay = 0;
         char c;
         boolean heroAttemp = false;
-        String charEnd = "\u2694";;
 
-        System.out.println(hero.attack());
-        System.out.println(goblin.attack());
+        System.out.println(hero);
+        System.out.println(goblin);
         System.out.println("\n" + butStart + "\n");
+
         while (lifeHero > 0 && lifeGoblin > 0) {
 
             Thread.sleep(300);
-            c = getSymHeroAtt(time++);
 
-            if(heroAttemp){
-                lifeGoblin -= hero.attack();
-                if(lifeGoblin < 0) lifeGoblin = 0;
+            if(numDelay == 0) {
+                if (heroAttemp) {
+                    deltaHeroAttack = hero.attack()/4;
+                    knifeHero = KNIFE;
+                    knifeMonster = " ";
+                } else {
+                    deltaMonstrAttack = goblin.attack()/4;
+                    knifeHero = " ";
+                    knifeMonster = KNIFE;
+                }
+            }
+
+            if(heroAttemp) {
+                c = getSymHeroAtt(time++);
+                lifeGoblin -= deltaHeroAttack;
+                if (lifeGoblin < 0) lifeGoblin = 0;
             }
             else{
-                lifeHero -= goblin.attack();
-                if(lifeHero < 0) lifeHero = 0;
+                c = getSymMonstAtt(time++);
+                lifeHero -= deltaMonstrAttack;
+                if (lifeHero < 0) lifeHero = 0;
             }
 
             System.out.printf("%s%s%s %5.2f%c %s  %c  %s %5.2f%c %s%s%s\r",
-                    heroBegin, hero.getName(), heroEnd, lifeHero / 100.0,'%', knifeHero,  c,
+                    heroBegin2, hero.getName(), heroEnd2, lifeHero / 100.0,'%', knifeHero,  c,
                     knifeMonster, lifeGoblin / 100.0,'%', monstBegin, goblin.getName(), monstEnd);
-            heroAttemp = !heroAttemp;
+
+            numDelay++; numDelay &= 3;
+            if(numDelay == 0) {
+                heroAttemp = !heroAttemp;
+            }
         }
-        knifeHero = "\u2764";
-        knifeMonster = "☠";
+
+        if(lifeHero > 0) {
+            knifeHero = "\u2764";
+            knifeMonster = "☠";
+            hero.setHealthPoints(lifeHero);
+            hero.addGold(goblin.getGold());
+            hero.setXp(time);
+        }
+        else{
+            knifeHero = "☠";
+            knifeMonster = "\u2764";
+            hero.setHealthPoints(0);
+            hero.setGold(0);
+        }
+
         System.out.printf("%s%s%s %5.2f%c %s  %s  %s %5.2f%c %s%s%s\n",
-                heroBegin, hero.getName(), heroEnd, lifeHero / 100.0,'%', knifeHero,  charEnd,
+                heroBegin2, hero.getName(), heroEnd2, lifeHero / 100.0,'%', knifeHero,  charEnd,
                 knifeMonster, lifeGoblin / 100.0,'%', monstBegin, goblin.getName(), monstEnd);
-        System.out.println("\n" + butEnd);
+        System.out.println("\n" + butEnd + "\n");
+
+        if(lifeHero > 0){
+            System.out.println(" ✌✌✌ Да здраствует великий победитель монстров, герой " + hero.getName() + " ✌✌✌");
+            System.out.println(hero);
+        }
+        else{
+            System.out.println("         \uD83C\uDF3A\uD83C\uDF3A\uD83C\uDF3A Вечняя память герою " + hero.getName()
+            + " \uD83C\uDF3A\uD83C\uDF3A\uD83C\uDF3A");
+            System.out.println("   \uD83C\uDFC1 \uD83C\uDFC1 \uD83C\uDFC1" +
+                    " Миссия не выполнена. Конец игры " +
+                    "\uD83C\uDFC1 \uD83C\uDFC1 \uD83C\uDFC1");
+        }
     }
 
     public static char getSymMonstAtt(int time) {

@@ -34,12 +34,17 @@ public class Goblin extends FantasyCharacter{
 
     @Override
     public String toString() {
-        return String.format("Наш гоблин %s: здоровье - %.2f%c, сила - %.2f%c, ловкость - %.2f%c, опыт - %.2f%c, золото - %d",
+        return String.format("Наш гоблин %9s: " +
+                        "\u2764 - %5.2f%c, " +
+                        "\uD83D\uDCAA - %5.2f%c, " +
+                        "\uD83E\uDD3A - %5.2f%c, " +
+                        "\uD83E\uDDD4 - %4d, " +
+                        "\uD83D\uDCB0 - %3d ",
                 getName(),
                 getHealthPoints() / 100.0, '%',
                 getStrength() / 100.0, '%',
                 getDexterity() / 100.0, '%',
-                getXp() / 100.0, '%',
+                getXp(),
                 getGold()
         );
     }
