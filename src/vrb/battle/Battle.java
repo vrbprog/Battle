@@ -5,6 +5,7 @@ import vrb.battle.characters.Hero;
 
 public class Battle {
     public static void main(String[] args) throws InterruptedException {
+
         System.out.println("Battle is starting...");
         Hero myHero = new Hero("Iliya");
         Goblin goblin = new Goblin("Gob");
@@ -61,7 +62,12 @@ public class Battle {
             }
             else{
                 c = getSymMonstAtt(time++);
-                lifeHero -= deltaMonstrAttack;
+                if(hero.getProtection() > 0){
+                    hero.useProtection();
+                }
+                else{
+                    lifeHero -= deltaMonstrAttack;
+                }
                 if (lifeHero < 0) lifeHero = 0;
             }
 
@@ -105,6 +111,7 @@ public class Battle {
                     " Миссия не выполнена. Конец игры " +
                     "\uD83C\uDFC1 \uD83C\uDFC1 \uD83C\uDFC1");
         }
+        System.out.println("\u2630 Menu  \uD83C\uDF81");
     }
 
     public static char getSymMonstAtt(int time) {

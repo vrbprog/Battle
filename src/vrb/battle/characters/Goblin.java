@@ -4,11 +4,11 @@ import vrb.battle.service.Randomiser;
 
 public class Goblin extends FantasyCharacter{
     private static final int GOBLIN_STRENGTH_INIT = 1300;
-    private static final int GOBLIN_DEXTERITY_INIT = 3200;
+    private static final int GOBLIN_DEXTERITY_INIT = 3000;
     private static final int GOBLIN_GOLD_INIT = 40;
-    private static final int GOBLIN_DEXTERITY_RND = 5400;
+    private static final int GOBLIN_DEXTERITY_RND = 5600;
     private static final int GOBLIN_LOWER_INIT = 200;
-    private static final int GOBLIN_RND_MULT = 1200;
+    private static final int GOBLIN_RND_MULT = 1000;
     private static final int GOBLIN_RND_DIV = 500;
 
     public Goblin(String name) {

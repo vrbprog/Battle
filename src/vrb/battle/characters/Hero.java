@@ -23,7 +23,7 @@ public class Hero extends FantasyCharacter {
                 0,
                 Randomiser.getRandomOf(HERO_GOLD_INIT)
         );
-        protection = 0;
+        protection = 10;
         extraPower = 0;
         medicine = 0;
     }
@@ -41,6 +41,12 @@ public class Hero extends FantasyCharacter {
 
     public void setProtection(int protection) {
         this.protection = protection;
+    }
+
+    public void useProtection(){
+        if(protection > 0){
+            protection--;
+        }
     }
 
     public int getExtraPower() {
@@ -61,9 +67,9 @@ public class Hero extends FantasyCharacter {
 
     @Override
     public int attack() {
-        if(getDexterity() * 3 > Randomiser.getRandomOf(HERO_DEXTERITY_RND))
+        if((getDexterity() + getXp()/10) * 3 > Randomiser.getRandomOf(HERO_DEXTERITY_RND))
             return (getStrength() * (Randomiser.getRandomOf(
-                    HERO_RND_MULT + extraPower + getXp()/10) + 1)) / HERO_RND_DIV;
+                    HERO_RND_MULT + extraPower) + 1)) / HERO_RND_DIV;
         else return 0;
     }
 
