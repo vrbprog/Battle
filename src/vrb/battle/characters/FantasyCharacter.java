@@ -8,10 +8,6 @@ public abstract class FantasyCharacter implements Fighter{
     private int xp;
     private int gold;
 
-    public FantasyCharacter(String name) {
-        this.name = name;
-    }
-
     public FantasyCharacter(String name, int healthPoints, int strength, int dexterity, int xp, int gold) {
         this.name = name;
         this.healthPoints = healthPoints;
@@ -34,7 +30,8 @@ public abstract class FantasyCharacter implements Fighter{
     }
 
     public void setHealthPoints(int healthPoints) {
-        this.healthPoints = healthPoints;
+        if(healthPoints >= 0 && healthPoints <= 10000)
+            this.healthPoints = healthPoints;
     }
 
     public int getStrength() {
@@ -42,7 +39,13 @@ public abstract class FantasyCharacter implements Fighter{
     }
 
     public void setStrength(int strength) {
-        this.strength = strength;
+        if(strength >= 0 && strength <= 10000)
+            this.strength = strength;
+    }
+
+    public void improveStrength(int strength) {
+        this.strength += strength;
+        if(this.strength > 10000) this.strength = 10000;
     }
 
     public int getDexterity() {
@@ -50,7 +53,13 @@ public abstract class FantasyCharacter implements Fighter{
     }
 
     public void setDexterity(int dexterity) {
-        this.dexterity = dexterity;
+        if(dexterity >= 0 && dexterity <= 10000)
+            this.dexterity = dexterity;
+    }
+
+    public void improveDexterity(int dexterity) {
+        this.dexterity += dexterity;
+        if(this.dexterity > 10000) this.dexterity = 10000;
     }
 
     public int getXp() {
@@ -58,7 +67,12 @@ public abstract class FantasyCharacter implements Fighter{
     }
 
     public void setXp(int xp) {
+        if(xp >= 0)
         this.xp = xp;
+    }
+
+    public void addXp(int xp) {
+        this.xp += xp;
     }
 
     public int getGold() {
@@ -66,11 +80,22 @@ public abstract class FantasyCharacter implements Fighter{
     }
 
     public void setGold(int gold) {
+        if(gold >= 0)
         this.gold = gold;
     }
 
     public void addGold(int gold) {
         this.gold += gold;
+    }
+
+    public boolean spendGold(int spend) {
+        if(spend <= gold) {
+            gold -= spend;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override

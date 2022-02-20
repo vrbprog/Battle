@@ -3,13 +3,13 @@ package vrb.battle.characters;
 import vrb.battle.service.Randomiser;
 
 public class Hero extends FantasyCharacter {
-    private static final int HERO_STRENGTH_INIT = 2000;
-    private static final int HERO_DEXTERITY_INIT = 4000;
-    private static final int HERO_GOLD_INIT = 200;
-    private static final int HERO_DEXTERITY_RND = 5200;
-    private static final int HERO_LOWER_INIT = 500;
-    private static final int HERO_RND_MULT = 800;
-    private static final int HERO_RND_DIV = 400;
+    private static final int STRENGTH_INIT = 2000;
+    private static final int DEXTERITY_INIT = 4000;
+    private static final int GOLD_INIT = 300;
+    private static final int DEXTERITY_RND = 5200;
+    private static final int LOWER_INIT = 500;
+    private static final int RND_MULT = 800;
+    private static final int RND_DIV = 400;
 
     private int protection;
     private int extraPower;
@@ -18,10 +18,10 @@ public class Hero extends FantasyCharacter {
     public Hero(String name) {
         super(name,
                 10000,
-                Randomiser.getRandomOf(HERO_STRENGTH_INIT) + HERO_LOWER_INIT,
-                Randomiser.getRandomOf(HERO_DEXTERITY_INIT) + HERO_LOWER_INIT,
+                Randomiser.getRandomOf(STRENGTH_INIT) + LOWER_INIT,
+                Randomiser.getRandomOf(DEXTERITY_INIT) + LOWER_INIT,
                 0,
-                Randomiser.getRandomOf(HERO_GOLD_INIT)
+                Randomiser.getRandomOf(GOLD_INIT)
         );
         protection = 10;
         extraPower = 0;
@@ -67,9 +67,9 @@ public class Hero extends FantasyCharacter {
 
     @Override
     public int attack() {
-        if((getDexterity() + getXp()/10) * 3 > Randomiser.getRandomOf(HERO_DEXTERITY_RND))
+        if((getDexterity() + getXp()/10) * 3 > Randomiser.getRandomOf(DEXTERITY_RND))
             return (getStrength() * (Randomiser.getRandomOf(
-                    HERO_RND_MULT + extraPower) + 1)) / HERO_RND_DIV;
+                    RND_MULT + extraPower) + 1)) / RND_DIV;
         else return 0;
     }
 
