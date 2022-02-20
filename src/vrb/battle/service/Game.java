@@ -9,9 +9,9 @@ import java.util.Scanner;
 
 public class Game {
     private static final int NUM_TYPE_OF_MONSTER = 2;
-    Thread threadScene;
-    Hero myHero = null;
-    ButtleRing ring;
+    private Thread threadScene;
+    private Hero myHero;
+    private ButtleRing ring;
     private boolean readyCurrentButtle = false;
 
     public void runGame() {

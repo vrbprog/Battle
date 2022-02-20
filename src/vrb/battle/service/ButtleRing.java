@@ -178,7 +178,7 @@ public class ButtleRing implements Runnable{
 
     private boolean getConfirmButtle() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Готовы к битве с монстром ???\n" +
+        System.out.println("\nГотовы к битве с монстром ???\n" +
                 "1 - Да, пожалуй начнем!!!\n" +
                 "0 - Нет, я наверное вернусь в город, что-то неважно себя чуствую. \n" +
                 "Ваш ответ: ");
