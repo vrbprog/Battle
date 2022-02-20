@@ -11,6 +11,8 @@ public class Game {
     private static final int NUM_TYPE_OF_MONSTER = 2;
     Thread threadScene;
     Hero myHero = null;
+    ButtleRing ring;
+    private boolean readyCurrentButtle = false;
 
     public void runGame() {
         String name = getNameHero();
@@ -28,7 +30,7 @@ public class Game {
                     break;
                 case '2':
                     //Goblin goblin = new Goblin("Gob");
-                    ButtleRing ring = new ButtleRing(myHero, getNextMonster());
+                    ring = new ButtleRing(myHero, getNextMonster());
                     threadScene = new Thread(ring);
                     threadScene.start();
                     try {
@@ -36,6 +38,7 @@ public class Game {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    readyCurrentButtle = ring.isReadyButtle();
                     break;
                 case '3':
                     System.out.println("Надеюсь увидить Вас вскоре. До встречи!!!");
@@ -68,13 +71,17 @@ public class Game {
 
         while (true) {
             if (scanner.hasNextInt()) {
-                if (scanner.nextInt() != 1) {
+                int choise = scanner.nextInt();
+                if (choise == 0) {
                     System.out.println("Очень жаль. Надеюсь увидить Вас вскоре. До встречи.");
                     return null;
-                } else {
+                } else if(choise == 1){
                     if (scanner.hasNextLine()) scanner.nextLine();
                     System.out.println("\nСкажи свое имя герой: ");
                     return scanner.nextLine();
+                }
+                else{
+                    System.out.println("Неверный ввод. Повторите еще раз.");
                 }
             } else {
                 System.out.println("Неверный ввод. Повторите еще раз.");
@@ -87,8 +94,15 @@ public class Game {
         char choise;
         boolean faultOperation = true;
         Scanner s = new Scanner(System.in);
+
+        if(readyCurrentButtle){
+            if(getConfirmNextButtle()){
+                return '2';
+            }
+        }
+
         do {
-            System.out.printf("Куда вы хотите пойти %s?\n",myHero.getName());
+            System.out.printf("\nВы в городе, куда вы хотите пойти %s?\n",myHero.getName());
             System.out.println("\u2630 Menu");
             System.out.println("1 - К торговцу.");
             System.out.println("2 - В темный лес.");
@@ -111,5 +125,32 @@ public class Game {
 
     private void Shopping() {
         System.out.println("К сожелению торговца нет в городе.");
+    }
+
+    private boolean getConfirmNextButtle() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Продолжаем прогулку по лесу ???\n" +
+                "1 - Да, продолжим.\n" +
+                "0 - Нет, я наверное вернусь в город. \n" +
+                "Ваш ответ: ");
+
+        while (true) {
+            if (scanner.hasNextInt()) {
+                int choise = scanner.nextInt();
+                if (choise == 0) {
+                    readyCurrentButtle = false;
+                    return false;
+                } else if (choise == 1){
+                    readyCurrentButtle = true;
+                    return true;
+                }
+                else {
+                    System.out.println("Неверный выбор. Повторите еще раз.");
+                }
+            } else {
+                System.out.println("Неверный выбор. Повторите еще раз.");
+                scanner.next();
+            }
+        }
     }
 }

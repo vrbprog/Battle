@@ -4,18 +4,30 @@ import vrb.battle.characters.Goblin;
 import vrb.battle.characters.Hero;
 import vrb.battle.characters.Monster;
 
+import java.util.Scanner;
+
 public class ButtleRing implements Runnable{
-    Hero hero;
-    Monster monster;
+    private Hero hero;
+    private Monster monster;
+    private boolean readyButtle;
+
+    public boolean isReadyButtle() {
+        return readyButtle;
+    }
+
+    public void setReadyButtle(boolean readyButtle) {
+        this.readyButtle = readyButtle;
+    }
 
     public ButtleRing(Hero hero, Monster monster) {
         this.hero = hero;
         this.monster = monster;
+        readyButtle = false;
     }
 
     @Override
     public void run() {
-        System.out.println("Battle is starting...");
+        //System.out.println("Battle is starting...");
         try {
             printBattle(hero, monster);
         } catch (InterruptedException e) {
@@ -30,7 +42,7 @@ public class ButtleRing implements Runnable{
         final String heroBegin2 = "\uD83D\uDC51️Hero:";
         final String heroEnd = "\uD83D\uDEE1️";
         final String heroEnd2 = "\uD83D\uDC51️";
-        final String monstBegin = "\uD83D\uDC79Monster:";
+        final String monstBegin = "\uD83D\uDC79";//Monster:";
         final String monstEnd = "\uD83D\uDC79";
         final String KNIFE = "\ud83d\udde1";
         final String charEnd = "\u2694"; //🎁
@@ -47,84 +59,86 @@ public class ButtleRing implements Runnable{
         boolean heroAttemp = false;
 
         //System.out.println(hero);
-        System.out.printf("Тебя вызыает на бой %s\n",monster.getNikName());
+        System.out.printf("Тебя вызыает на бой %s\n", monster.getNikName());
         System.out.println(monster);
-        System.out.println("\n" + butStart + "\n");
 
-        while (lifeHero > 0 && lifeGoblin > 0) {
+        if (getConfirmButtle()) {
+
+            System.out.println("\n" + butStart + "\n");
+
+            while (lifeHero > 0 && lifeGoblin > 0) {
 
             Thread.sleep(300);
 
-            if(numDelay == 0) {
+            if (numDelay == 0) {
                 if (heroAttemp) {
-                    deltaHeroAttack = hero.attack()/4;
+                    deltaHeroAttack = hero.attack() / 4;
                     knifeHero = KNIFE;
                     knifeMonster = " ";
                 } else {
-                    deltaMonstrAttack = monster.attack()/4;
+                    deltaMonstrAttack = monster.attack() / 4;
                     knifeHero = " ";
                     knifeMonster = KNIFE;
                 }
             }
 
-            if(heroAttemp) {
+            if (heroAttemp) {
                 c = getSymHeroAtt(time++);
                 lifeGoblin -= deltaHeroAttack;
                 if (lifeGoblin < 0) lifeGoblin = 0;
-            }
-            else{
+            } else {
                 c = getSymMonstAtt(time++);
-                if(hero.getProtection() > 0){
+                if (hero.getProtection() > 0) {
                     hero.useProtection();
-                }
-                else{
+                } else {
                     lifeHero -= deltaMonstrAttack;
                 }
                 if (lifeHero < 0) lifeHero = 0;
             }
 
-            System.out.printf("%s%s%s %5.2f%c %s  %c  %s %5.2f%c %s%s%s\r",
-                    heroBegin2, hero.getName(), heroEnd2, lifeHero / 100.0,'%', knifeHero,  c,
-                    knifeMonster, lifeGoblin / 100.0,'%', monstBegin, monster.getName(), monstEnd);
+            System.out.printf("%s%s%s %5.2f%c %s  %c  %s %5.2f%c %s%s%c%s%s\r",
+                    heroBegin2, hero.getName(), heroEnd2, lifeHero / 100.0, '%', knifeHero, c,
+                    knifeMonster, lifeGoblin / 100.0, '%', monstBegin, monster.getNikName(),':',monster.getName(), monstEnd);
 
-            numDelay++; numDelay &= 3;
-            if(numDelay == 0) {
+            numDelay++;
+            numDelay &= 3;
+            if (numDelay == 0) {
                 heroAttemp = !heroAttemp;
             }
         }
 
-        if(lifeHero > 0) {
+        if (lifeHero > 0) {
             knifeHero = "\u2764";
             knifeMonster = "☠";
             hero.setHealthPoints(lifeHero);
             hero.addGold(monster.getGold());
             hero.addXp(time);
-            hero.improveStrength(monster.getStrength()/100);
-            hero.improveDexterity(monster.getDexterity()/100);
-        }
-        else{
+            hero.improveStrength(monster.getStrength() / 100);
+            hero.improveDexterity(monster.getDexterity() / 100);
+        } else {
             knifeHero = "☠";
             knifeMonster = "\u2764";
             hero.setHealthPoints(0);
             hero.setGold(0);
         }
 
-        System.out.printf("%s%s%s %5.2f%c %s  %s  %s %5.2f%c %s%s%s\n",
-                heroBegin2, hero.getName(), heroEnd2, lifeHero / 100.0,'%', knifeHero,  charEnd,
-                knifeMonster, lifeGoblin / 100.0,'%', monstBegin, monster.getName(), monstEnd);
+        System.out.printf("%s%s%s %5.2f%c %s  %s  %s %5.2f%c %s%s%c%s%s\n",
+                heroBegin2, hero.getName(), heroEnd2, lifeHero / 100.0, '%', knifeHero, charEnd,
+                knifeMonster, lifeGoblin / 100.0, '%', monstBegin, monster.getNikName(),':',monster.getName(), monstEnd);
         System.out.println("\n" + butEnd + "\n");
 
-        if(lifeHero > 0){
+        if (lifeHero > 0) {
             System.out.println(" ✌✌✌ Да здраствует великий победитель монстров, герой " + hero.getName() + " ✌✌✌");
             System.out.println(hero);
-        }
-        else{
+        } else {
             System.out.println("         \uD83C\uDF3A\uD83C\uDF3A\uD83C\uDF3A Вечняя память герою " + hero.getName()
                     + " \uD83C\uDF3A\uD83C\uDF3A\uD83C\uDF3A");
             System.out.println("   \uD83C\uDFC1 \uD83C\uDFC1 \uD83C\uDFC1" +
                     " Миссия не выполнена. Конец игры " +
                     "\uD83C\uDFC1 \uD83C\uDFC1 \uD83C\uDFC1");
         }
+
+    }
         System.out.println();
     }
 
@@ -160,5 +174,33 @@ public class ButtleRing implements Runnable{
                 return '|';
         }
         return out;
+    }
+
+    private boolean getConfirmButtle() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Готовы к битве с монстром ???\n" +
+                "1 - Да, пожалуй начнем!!!\n" +
+                "0 - Нет, я наверное вернусь в город, что-то неважно себя чуствую. \n" +
+                "Ваш ответ: ");
+
+        while (true) {
+            if (scanner.hasNextInt()) {
+                int choise = scanner.nextInt();
+                if (choise == 0) {
+                    //System.out.println("Очень жаль. Надеюсь увидить Вас вскоре. До встречи.");
+                    readyButtle = false;
+                    return false;
+                } else if(choise == 1){
+                    readyButtle = true;
+                    return true;
+                }
+                else{
+                    System.out.println("Неверный выбор. Повторите еще раз.");
+                }
+            } else {
+                System.out.println("Неверный выбор. Повторите еще раз.");
+                scanner.next();
+            }
+        }
     }
 }
