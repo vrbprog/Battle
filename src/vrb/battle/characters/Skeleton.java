@@ -1,6 +1,6 @@
 package vrb.battle.characters;
 
-import vrb.battle.service.Randomiser;
+import vrb.battle.service.Randomizer;
 
 public class Skeleton extends Monster {
     private static final int STRENGTH_INIT = 1500;
@@ -14,10 +14,10 @@ public class Skeleton extends Monster {
     public Skeleton(){
         super("noName",
                 10000,
-                Randomiser.getRandomOf(STRENGTH_INIT)  + LOWER_INIT,
-                Randomiser.getRandomOf(DEXTERITY_INIT) + LOWER_INIT,
+                Randomizer.getRandomOf(STRENGTH_INIT)  + LOWER_INIT,
+                Randomizer.getRandomOf(DEXTERITY_INIT) + LOWER_INIT,
                 0,
-                Randomiser.getRandomOf(GOLD_INIT),
+                Randomizer.getRandomOf(GOLD_INIT),
                 "Skeleton"
         );
     }
@@ -25,10 +25,10 @@ public class Skeleton extends Monster {
     public Skeleton(String name) {
         super(name,
                 10000,
-                Randomiser.getRandomOf(STRENGTH_INIT)  + LOWER_INIT,
-                Randomiser.getRandomOf(DEXTERITY_INIT) + LOWER_INIT,
+                Randomizer.getRandomOf(STRENGTH_INIT)  + LOWER_INIT,
+                Randomizer.getRandomOf(DEXTERITY_INIT) + LOWER_INIT,
                 0,
-                Randomiser.getRandomOf(GOLD_INIT),
+                Randomizer.getRandomOf(GOLD_INIT),
                 "Skeleton"
         );
     }
@@ -39,8 +39,8 @@ public class Skeleton extends Monster {
 
     @Override
     public int attack() {
-        if(getDexterity() * 3 > Randomiser.getRandomOf(DEXTERITY_RND))
-            return (getStrength() * (Randomiser.getRandomOf(RND_MULT + getXp()/10) + 1)) / RND_DIV;
+        if(getDexterity() * 3 > Randomizer.getRandomOf(DEXTERITY_RND))
+            return (getStrength() * (Randomizer.getRandomOf(RND_MULT + getXp()/10) + 1)) / RND_DIV;
         else return 0;
     }
 

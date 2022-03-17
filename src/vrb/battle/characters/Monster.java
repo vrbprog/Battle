@@ -2,7 +2,7 @@ package vrb.battle.characters;
 
 public class Monster extends FantasyCharacter{
 
-    private String nikName = null;
+    private final String nikName;
 
     public Monster(String name, int healthPoints, int strength, int dexterity, int xp, int gold, String nik) {
         super(name, healthPoints, strength, dexterity, xp, gold);

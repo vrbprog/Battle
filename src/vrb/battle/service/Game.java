@@ -47,7 +47,7 @@ public class Game {
 
     private Monster getNextMonster() {
         Monster monster;
-        int monsterType = Randomiser.getRandomOf(9999) % NUM_TYPE_OF_MONSTER;
+        int monsterType = Randomizer.getRandomOf(9999) % NUM_TYPE_OF_MONSTER;
         switch (monsterType) {
             case 0:
                 monster = new Goblin();

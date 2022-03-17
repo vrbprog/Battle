@@ -1,6 +1,6 @@
 package vrb.battle.characters;
 
-import vrb.battle.service.Randomiser;
+import vrb.battle.service.Randomizer;
 
 public class Hero extends FantasyCharacter {
     private static final int STRENGTH_INIT = 2000;
@@ -18,10 +18,10 @@ public class Hero extends FantasyCharacter {
     public Hero(String name) {
         super(name,
                 10000,
-                Randomiser.getRandomOf(STRENGTH_INIT) + LOWER_INIT,
-                Randomiser.getRandomOf(DEXTERITY_INIT) + LOWER_INIT,
+                Randomizer.getRandomOf(STRENGTH_INIT) + LOWER_INIT,
+                Randomizer.getRandomOf(DEXTERITY_INIT) + LOWER_INIT,
                 0,
-                Randomiser.getRandomOf(GOLD_INIT)
+                Randomizer.getRandomOf(GOLD_INIT)
         );
         protection = 10;
         extraPower = 0;
@@ -67,8 +67,8 @@ public class Hero extends FantasyCharacter {
 
     @Override
     public int attack() {
-        if((getDexterity() + getXp()/10) * 3 > Randomiser.getRandomOf(DEXTERITY_RND))
-            return (getStrength() * (Randomiser.getRandomOf(
+        if((getDexterity() + getXp()/10) * 3 > Randomizer.getRandomOf(DEXTERITY_RND))
+            return (getStrength() * (Randomizer.getRandomOf(
                     RND_MULT + extraPower) + 1)) / RND_DIV;
         else return 0;
     }
