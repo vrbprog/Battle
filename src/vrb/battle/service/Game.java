@@ -9,10 +9,8 @@ import java.util.Scanner;
 
 public class Game {
     private static final int NUM_TYPE_OF_MONSTER = 2;
-    private Thread threadScene;
     private Hero myHero;
-    private ButtleRing ring;
-    private boolean readyCurrentButtle = false;
+    private boolean readyCurrentBattle = false;
 
     public void runGame() {
         String name = getNameHero();
@@ -23,22 +21,22 @@ public class Game {
 
         System.out.printf("Да ты силен, %s\n", myHero.getName());
         System.out.println(myHero);
+
         while (myHero.getHealthPoints() > 0) {
             switch (getItemMenu()) {
                 case '1':
                     Shopping();
                     break;
                 case '2':
-                    //Goblin goblin = new Goblin("Gob");
-                    ring = new ButtleRing(myHero, getNextMonster());
-                    threadScene = new Thread(ring);
+                    BattleRing ring = new BattleRing(myHero, getNextMonster());
+                    Thread threadScene = new Thread(ring);
                     threadScene.start();
                     try {
                         threadScene.join();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    readyCurrentButtle = ring.isReadyButtle();
+                    readyCurrentBattle = ring.isReadyBattle();
                     break;
                 case '3':
                     System.out.println("Надеюсь увидить Вас вскоре. До встречи!!!");
@@ -95,8 +93,8 @@ public class Game {
         boolean faultOperation = true;
         Scanner s = new Scanner(System.in);
 
-        if(readyCurrentButtle){
-            if(getConfirmNextButtle()){
+        if(readyCurrentBattle){
+            if(getConfirmNextBattle()){
                 return '2';
             }
         }
@@ -127,7 +125,7 @@ public class Game {
         System.out.println("К сожелению торговца нет в городе.");
     }
 
-    private boolean getConfirmNextButtle() {
+    private boolean getConfirmNextBattle() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Продолжаем прогулку по лесу ???\n" +
                 "1 - Да, продолжим.\n" +
@@ -138,10 +136,10 @@ public class Game {
             if (scanner.hasNextInt()) {
                 int choise = scanner.nextInt();
                 if (choise == 0) {
-                    readyCurrentButtle = false;
+                    readyCurrentBattle = false;
                     return false;
                 } else if (choise == 1){
-                    readyCurrentButtle = true;
+                    readyCurrentBattle = true;
                     return true;
                 }
                 else {

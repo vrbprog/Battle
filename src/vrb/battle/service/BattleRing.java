@@ -1,28 +1,23 @@
 package vrb.battle.service;
 
-import vrb.battle.characters.Goblin;
 import vrb.battle.characters.Hero;
 import vrb.battle.characters.Monster;
 
 import java.util.Scanner;
 
-public class ButtleRing implements Runnable{
-    private Hero hero;
-    private Monster monster;
-    private boolean readyButtle;
+public class BattleRing implements Runnable{
+    private final Hero hero;
+    private final Monster monster;
+    private boolean readyBattle;
 
-    public boolean isReadyButtle() {
-        return readyButtle;
+    public boolean isReadyBattle() {
+        return readyBattle;
     }
 
-    public void setReadyButtle(boolean readyButtle) {
-        this.readyButtle = readyButtle;
-    }
-
-    public ButtleRing(Hero hero, Monster monster) {
+    public BattleRing(Hero hero, Monster monster) {
         this.hero = hero;
         this.monster = monster;
-        readyButtle = false;
+       // readyBattle = false;
     }
 
     @Override
@@ -38,9 +33,9 @@ public class ButtleRing implements Runnable{
     private void printBattle(Hero hero, Monster monster) throws InterruptedException {
         final String butStart = "            ꧁༺ \u2694 Start of Battle \u2694 ༻꧂        ";
         final String butEnd = "           ▀▄▀▄▀▄ \uD83D\uDC98 End of Buttle \uD83D\uDC98 ▄▀▄▀▄▀        ";
-        final String heroBegin = "\uD83D\uDEE1️Hero:";
+        //final String heroBegin = "\uD83D\uDEE1️Hero:";
         final String heroBegin2 = "\uD83D\uDC51️Hero:";
-        final String heroEnd = "\uD83D\uDEE1️";
+        //final String heroEnd = "\uD83D\uDEE1️";
         final String heroEnd2 = "\uD83D\uDC51️";
         final String monstBegin = "\uD83D\uDC79";//Monster:";
         final String monstEnd = "\uD83D\uDC79";
@@ -187,11 +182,10 @@ public class ButtleRing implements Runnable{
             if (scanner.hasNextInt()) {
                 int choise = scanner.nextInt();
                 if (choise == 0) {
-                    //System.out.println("Очень жаль. Надеюсь увидить Вас вскоре. До встречи.");
-                    readyButtle = false;
+                    readyBattle = false;
                     return false;
                 } else if(choise == 1){
-                    readyButtle = true;
+                    readyBattle = true;
                     return true;
                 }
                 else{
