@@ -67,24 +67,13 @@ public class Game {
                 "0 - Нет, я еще не готов...\n" +
                 "Ваш ответ: ");
 
-        while (true) {
-            if (scanner.hasNextInt()) {
-                int choise = scanner.nextInt();
-                if (choise == 0) {
-                    System.out.println("Очень жаль. Надеюсь увидить Вас вскоре. До встречи.");
-                    return null;
-                } else if(choise == 1){
-                    if (scanner.hasNextLine()) scanner.nextLine();
-                    System.out.println("\nСкажи свое имя герой: ");
-                    return scanner.nextLine();
-                }
-                else{
-                    System.out.println("Неверный ввод. Повторите еще раз.");
-                }
-            } else {
-                System.out.println("Неверный ввод. Повторите еще раз.");
-                scanner.next();
-            }
+        boolean choice = getBinaryChoice();
+        if(choice){
+            System.out.println("\nСкажи свое имя герой: ");
+            return scanner.nextLine();
+        } else {
+            System.out.println("Очень жаль. Надеюсь увидить Вас вскоре. До встречи.");
+            return null;
         }
     }
 
@@ -126,20 +115,23 @@ public class Game {
     }
 
     private boolean getConfirmNextBattle() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Продолжаем прогулку по лесу ???\n" +
                 "1 - Да, продолжим.\n" +
                 "0 - Нет, я наверное вернусь в город. \n" +
                 "Ваш ответ: ");
 
-        while (true) {
+        readyCurrentBattle = getBinaryChoice();
+        return readyCurrentBattle;
+    }
+
+    private boolean getBinaryChoice(){
+        Scanner scanner = new Scanner(System.in);
+        while(true) {
             if (scanner.hasNextInt()) {
                 int choise = scanner.nextInt();
                 if (choise == 0) {
-                    readyCurrentBattle = false;
                     return false;
                 } else if (choise == 1){
-                    readyCurrentBattle = true;
                     return true;
                 }
                 else {
