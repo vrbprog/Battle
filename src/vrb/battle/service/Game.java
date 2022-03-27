@@ -1,9 +1,6 @@
 package vrb.battle.service;
 
-import vrb.battle.characters.Goblin;
-import vrb.battle.characters.Hero;
-import vrb.battle.characters.Monster;
-import vrb.battle.characters.Skeleton;
+import vrb.battle.characters.*;
 
 import java.util.Scanner;
 
@@ -25,7 +22,7 @@ public class Game {
         while (myHero.getHealthPoints() > 0) {
             switch (getItemMenu()) {
                 case '1':
-                    Shopping();
+                    Tradesman.Shopping(myHero);
                     break;
                 case '2':
                     BattleRing ring = new BattleRing(myHero, getNextMonster());
@@ -62,7 +59,7 @@ public class Game {
 
     private String getNameHero() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Наш мир в большой опасности. Монстры повсюду. Ты готов спасти его ???\n" +
+        System.out.print("Наш мир в большой опасности. Монстры повсюду. Ты готов спасти его ???\n" +
                 "1 - Да, я готов!!!\n" +
                 "0 - Нет, я еще не готов...\n" +
                 "Ваш ответ: ");
@@ -94,6 +91,7 @@ public class Game {
             System.out.println("1 - К торговцу.");
             System.out.println("2 - В темный лес.");
             System.out.println("3 - На выход.");
+            System.out.print("Ваш выбор: ");
             choise = s.next().charAt(0);
             switch (choise) {
                 case '1':
@@ -110,12 +108,8 @@ public class Game {
         return choise;
     }
 
-    private void Shopping() {
-        System.out.println("К сожелению торговца нет в городе.");
-    }
-
     private boolean getConfirmNextBattle() {
-        System.out.println("Продолжаем прогулку по лесу ???\n" +
+        System.out.print("Продолжаем прогулку по лесу ???\n" +
                 "1 - Да, продолжим.\n" +
                 "0 - Нет, я наверное вернусь в город. \n" +
                 "Ваш ответ: ");
@@ -128,10 +122,10 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
         while(true) {
             if (scanner.hasNextInt()) {
-                int choise = scanner.nextInt();
-                if (choise == 0) {
+                int choice = scanner.nextInt();
+                if (choice == 0) {
                     return false;
-                } else if (choise == 1){
+                } else if (choice == 1){
                     return true;
                 }
                 else {

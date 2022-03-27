@@ -13,7 +13,7 @@ public class Hero extends FantasyCharacter {
 
     private int protection;
     private int extraPower;
-    private int medicine;
+    private int potion;
 
     public Hero(String name) {
         super(name,
@@ -25,14 +25,14 @@ public class Hero extends FantasyCharacter {
         );
         protection = 10;
         extraPower = 0;
-        medicine = 0;
+        potion = 0;
     }
 
     public Hero(String name, int healthPoints, int strength, int dexterity, int xp, int gold) {
         super(name, healthPoints, strength, dexterity, xp, gold);
         protection = 0;
         extraPower = 0;
-        medicine = 0;
+        potion = 0;
     }
 
     public int getProtection() {
@@ -41,6 +41,10 @@ public class Hero extends FantasyCharacter {
 
     public void setProtection(int protection) {
         this.protection = protection;
+    }
+
+    public void addProtection(int protection) {
+        this.protection += protection;
     }
 
     public void useProtection(){
@@ -57,12 +61,20 @@ public class Hero extends FantasyCharacter {
         this.extraPower = extraPower;
     }
 
-    public int getMedicine() {
-        return medicine;
+    public void addExtraPower(int extraPower) {
+        this.extraPower += extraPower;
     }
 
-    public void setMedicine(int medicine) {
-        this.medicine = medicine;
+    public int getPotion() {
+        return potion;
+    }
+
+    public void setPotion(int potion) {
+        this.potion = potion;
+    }
+
+    public void addPotion(int potion) {
+        this.potion += potion;
     }
 
     @Override
@@ -92,7 +104,7 @@ public class Hero extends FantasyCharacter {
                 getGold(),
                 extraPower,
                 protection,
-                medicine
+                potion
         );
     }
 }

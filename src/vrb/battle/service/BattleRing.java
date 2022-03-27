@@ -42,6 +42,7 @@ public class BattleRing implements Runnable{
         final String KNIFE = "\ud83d\udde1";
         final String charEnd = "\u2694"; //🎁
         String knifeHero = " ";
+        String protectionHero = " ";
         String knifeMonster = " ";
 
         int lifeHero = hero.getHealthPoints();
@@ -85,14 +86,16 @@ public class BattleRing implements Runnable{
                 c = getSymMonstAtt(time++);
                 if (hero.getProtection() > 0) {
                     hero.useProtection();
+                    protectionHero = "\uD83D\uDEE1️ ";
                 } else {
                     lifeHero -= deltaMonstrAttack;
+                    protectionHero = " ";
                 }
                 if (lifeHero < 0) lifeHero = 0;
             }
 
-            System.out.printf("%s%s%s %5.2f%c %s  %c  %s %5.2f%c %s%s%c%s%s\r",
-                    heroBegin2, hero.getName(), heroEnd2, lifeHero / 100.0, '%', knifeHero, c,
+            System.out.printf("%s%s%s %5.2f %c %s %s  %c  %s %5.2f%c %s%s%c%s%s\r",
+                    heroBegin2, hero.getName(), heroEnd2, lifeHero / 100.0, '%', protectionHero, knifeHero, c,
                     knifeMonster, lifeGoblin / 100.0, '%', monstBegin, monster.getNikName(),':',monster.getName(), monstEnd);
 
             numDelay++;
@@ -173,7 +176,7 @@ public class BattleRing implements Runnable{
 
     private boolean getConfirmButtle() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("\nГотовы к битве с монстром ???\n" +
+        System.out.print("\nГотовы к битве с монстром ???\n" +
                 "1 - Да, пожалуй начнем!!!\n" +
                 "0 - Нет, я наверное вернусь в город, что-то неважно себя чуствую. \n" +
                 "Ваш ответ: ");
